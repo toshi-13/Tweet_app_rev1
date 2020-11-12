@@ -4,18 +4,43 @@
   </div>
   <ul class="header_menu">
     <a href="/contens"><li>Waht This Site</li></a>
-    <a href="/posts/index"><li>投稿一覧</li></a>
+    <a href="/posts"><li>投稿一覧</li></a>
   </ul>
   <div class="contens_haeder">
   </div>
 </header>
-<div class="main posts-index">
-  <div class="container">
-    <div class="posts-index-item">
-      今日からProgateでRailsの勉強するよー！
-    </div>
-    <div class="posts-index-item">
-      投稿一覧ページ作成中！
-    </div>
+
+<main>
+  <div class="toukou align-items-center">
+    <h1>投稿一覧</h1>
   </div>
-</div>
+  <div class="ml-auto toukou_button">
+    <a class="btn btn-outline-info" href="/posts/new" role="button">投稿</a>
+  </div>
+  <table class="table table-bordered border-primary table-hover table-sm posts_table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" style="width: 40px">No.</th>
+      <th scope="col" style="width: 700px">投稿タイトル</th>
+      <th scope="col">投稿者</th>
+      <th scope="col">投稿日</th>
+      <th scope="col">更新日時</th>
+    </tr>
+  </thead>
+  <tbody >
+    <!-- 追加 -->
+      <% @posts.each do |post| %>
+        <tr>
+          <th><%= post.id %></th>
+          <td><%= post.title %></td>
+          <td><%= post.name %></td>
+          <td><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+          <td><%= post.updated_at.strftime('%Y/%m/%d %H:%M') %></td>
+          <!-- 追加 post オブジェクトを指定することで、そのページの詳細画面を表示させることができる-->
+          <td ><%= link_to '詳細', posts_path,id: "detail-" + post.id.to_s, class: 'btn btn-outline-info',:style=>"color:green" %></td>
+           <td><%= link_to "削除" , post, class: 'btn btn-outline-info', method: :delete %></td>
+        </tr>
+        <% end %>
+  </tbody>
+</table>
+</main>
